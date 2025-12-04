@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D.Arts.Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            color: #ECDFCC;
+
+            /* === ФОН ТВОЄЇ КАРТИНКИ === */
+            background: url("watch.jpg") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* напівпрозорий шар поверх зображення, щоб все було читабельно */
+        .overlay {
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(2px);
+        }
+
+        .page {
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 16px 64px;
+        }
+
+        /* ====== HEADER ====== */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #697565;
+        }
+
+        nav a {
+            color: #ECDFCC;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 18px;
+            padding-bottom: 3px;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover {
+            border-bottom-color: #f86538;
+        }
+
+        /* ====== HERO ====== */
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+            gap: 32px;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            color: 777C6D;
+        }
+
+        .hero-subtitle {
+            color: #ECDFCC;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+    display: inline-block;
+    padding: 12px 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(0, 0, 0, 0.6);
+    color: #ECDFCC;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+
+    transition: transform 0.15s ease, 
+                box-shadow 0.15s ease, 
+                background 0.15s ease, 
+                border-color 0.15s ease;
+        }
+
+        .btn-primary {
+    background: linear-gradient(135deg, #697565, #3C3D37);
+    border-color: #3F4F44;
+    box-shadow: 0 0 14px rgba(2, 99, 23, 0.5);
+        }
+
+        .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(0, 245, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+
+        .hero-card {
+            border-radius: 24px;
+            padding: 20px;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero-card-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .hero-card-text {
+            font-size: 14px;
+            color: #ECDFCC;
+        }
+        a {
+    color: #ECDFCC; /* Блакитний */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ECDFCC; /* При наведенні білий */
+    text-decoration: underline;
+}
+
+
+        /* ====== SECTION BASE ====== */
+
+        section {
+            margin-top: 56px;
+        }
+
+        section h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        section p.section-desc {
+            color: #ECDFCC;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* ====== ABOUT ====== */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+            gap: 24px;
+        }
+
+        .about-box {
+            border-radius: 20px;
+            padding: 16px 18px;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 14px;
+            color: #ECDFCC;
+        }
+
+        .about-box strong {
+            color: #ECDFCC;
+        }
+
+        /* ====== SKILLS ====== */
+        
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .skill-card {
+            border-radius: 18px;
+            padding: 14px;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 13px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .skill-bar {
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(100,100,100,0.4);
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ECDFCC, #697565);
+        }
+
+        .high { width: 60%; }
+        .medium { width: 95%; }
+        .low { width: 95%; }
+
+        /* ====== PROJECTS ====== */
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .project-card {
+            border-radius: 20px;
+            padding: 16px;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 14px;
+        }
+
+        .project-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+            font-size: 11px;
+        }
+
+        .project-tag {
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(62, 75, 0, 0.7);
+        }
+
+        /* ====== CONTACT ====== */
+
+        .contact-box {
+            border-radius: 20px;
+            padding: 18px;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 14px;
+        }
+
+        .contact-row {
+            margin-top: 8px;
+        }
+
+        .contact-row span {
+            display: inline-block;
+            width: 70px;
+            color: #9ca3af;
+        }
+
+        .contact-link {
+            color: #ECDFCC;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            padding: 20px 16px 32px;
+            text-align: center;
+            font-size: 12px;
+            color: #ECDFCC;
+        }
+
+        /* ====== АДАПТИВ ====== */
+
+        @media (max-width: 768px) {
+            .hero { grid-template-columns: 1fr; }
+            .about-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .projects-grid { grid-template-columns: 1fr; }
+
+            .nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+        /* ===== АДАПТИВ ДЛЯ ТЕЛЕФОНІВ ===== */
+
+/* планшети / невеликі екрани */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 16px 14px 40px;
+    }
+
+    header {
+        position: static;
+    }
+
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    nav a {
+        margin-left: 0;
+        margin-right: 12px;
+        font-size: 13px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;       /* картка під текстом */
+        gap: 20px;
+        padding-top: 24px;
+    }
+
+    .hero-title {
+        font-size: 26px;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 14px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        margin-top: 40px;
+    }
+}
+
+/* дуже маленькі екрани (телефони) */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .hero-title {
+        font-size: 22px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-box,
+    .skill-card,
+    .project-card,
+    .contact-box {
+        padding: 12px 14px;
+        border-radius: 16px;
+    }
+
+    header {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+<div class="overlay">
+<div class="page">
+    <!-- HEADER -->
+    <header>
+        <div class="container nav">
+            <div class="logo">3D.Arts.Dev</div>
+            <nav>
+                <a href="#hero">Home</a>
+                <a href="#about">About me</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contacts</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- HERO -->
+        <section id="hero" class="hero">
+            <div>
+                <h1 class="hero-title">
+                    Hello, my name <span>Dmitry</span><br>
+                    3D developer
+                </h1>
+
+                <p class="hero-subtitle">
+                    I create 3D visualisations, animations,
+                    designs and websites for your business.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=3d.arts.dev@gmail.com" 
+   target="_blank" 
+   class="btn btn-primary">
+    Write to me
+</a>
+
+
+                    
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-card-title">Briefly about me</div>
+                <p class="hero-card-text">
+                    I create creative designs for your business products.
+                </p>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about">
+            <h2>About me</h2>
+            <p class="section-desc">
+                3D developer, visualiser
+            </p>
+
+            <div class="about-grid">
+                <div class="about-box">
+                    <strong>Who am I:</strong><br>
+                    a developer who wants to create masterpieces.<br><br>
+                    
+                </div>
+                <div class="about-box">
+                    <strong>Objective:</strong><br>
+                   Constant communication with the customer to achieve unbeatable results, pleasant cooperation, further recommendations.<br><br>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills">
+            <h2>Software</h2>
+            <p class="section-desc">
+               
+            </p>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-name">Cinema4D</div>
+                    <div class="skill-bar"><div class="skill-bar-fill high"></div></div>
+                    <div>Deformers, OctaneRender nodes, modelling, rendering.</div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-name">Blender</div>
+                    <div class="skill-bar"><div class="skill-bar-fill medium"></div></div>
+                    <div>Modelling, texturing, rendering, animation, physics, visual effects</div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-name">Photoshop</div>
+                    <div class="skill-bar"><div class="skill-bar-fill low"></div></div>
+                    <div>Retouching and editing photos, post-processing finished renders.</div>
+                </div>
+                <div class="skill-card">
+    <div class="skill-name">DaVinci Resolve</div>
+    <div class="skill-bar"><div class="skill-bar-fill high"></div></div>
+    <div>compositing, vfx</div>
+</div>
+
+<div class="skill-card">
+    <div class="skill-name">Substance painter</div>
+    <div class="skill-bar"><div class="skill-bar-fill medium"></div></div>
+    <div>Texturing, baking, creating textures</div>
+</div>
+
+<div class="skill-card">
+    <div class="skill-name">Adobe Illustrator</div>
+    <div class="skill-bar"><div class="skill-bar-fill low"></div></div>
+    <div>creation of vector images, logos, business card design</div>
+</div>
+
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <p class="section-desc">
+                My works:
+            </p>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-title">My Instagram</div>
+                    <div><a href="https://www.instagram.com/3d.arts.dev?igsh=MTg0YWF5cWt5OHpjcw%3D%3D&utm_source=qr" target="_blank">
+    https://www.instagram.com/3d.arts.dev
+    
+    
+</a>
+</div>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-title">.Behance</div>
+                    <div>https://www.behance.net/orionoff</div>
+                    <div class="project-tags">
+                        <span class="project-tag">VS Code</span>
+                        <span class="project-tag">Practice</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <h2>Contacts</h2>
+            <p class="section-desc">How to contact me.</p>
+
+            <div class="contact-box">
+                <div class="contact-row">
+                    <span>Email:</span>
+                    <a href="mailto:email@example.com" class="contact-link">3d.arts.dev@gmail.com</a>
+                </div>
+                <div class="contact-row">
+                    <span>Telegram:</span>
+                    <a href="https://t.me/molodoiiiiiiiiiiiiiii" class="contact-link">https://t.me/molodoiiiiiiiiiiiiiii</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        © 2025 3D.Arts.Dev
+    </footer>
+</div>
+</div>
+</body>
+</html>
