@@ -3,72 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Skills</title>
+    <title>Skills – 3D.Arts.Dev</title>
 
     <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            background: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
+        body {
+            margin: 0;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #ECDFCC;
+            min-height: 100vh;
+        }
+
+        /* ===== ВІДЕОФОН ===== */
+        .bg-video-wrap {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-video-wrap video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35);
+        }
+
+        .page-overlay {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, rgba(148, 163, 184, 0.06), transparent 55%);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 10px 18px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #697565;
+            white-space: nowrap;
+        }
+
+        nav a {
+            color: #ECDFCC;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 18px;
+            padding-bottom: 3px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+            opacity: 0.85;
+        }
+
+        nav a:first-child {
+            margin-left: 0;
+        }
+
+        nav a:hover {
+            border-bottom-color: #697565;
+            opacity: 1;
+        }
+
+        nav a.active {
+            border-bottom-color: #697565;
+            color: #ECDFCC;
+            opacity: 1;
+        }
+
+        /* ===== КОНТЕНТ ===== */
+        main {
+            padding: 32px 18px 48px;
+        }
+
+        .skills-header {
+            max-width: 1080px;
+            margin: 0 auto 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skills-header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .skills-header p {
+            margin: 0;
+            font-size: 14px;
+            color: #ECDFCC;
+            max-width: 520px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(47, 51, 39, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #ECDFCC;
+        }
+
+        .pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #40ff00;
+            box-shadow: 0 0 10px rgba(230, 248, 167, 0.8);
+        }
+
+        /* ===== GRID ===== */
+        .skills-grid-wrap {
+            max-width: 1080px;
+            margin: 0 auto;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
         }
 
+        /* БАЗОВА КАРТКА (скло) */
         .skill-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+            padding: 18px 18px 16px;
+            border-radius: 22px;
+
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                inset 0 0 20px rgba(255, 255, 255, 0.05),
+                inset 0 0 40px rgba(255, 255, 255, 0.03),
+                0 12px 35px rgba(0, 0, 0, 0.6),
+                0 0 18px rgba(255, 255, 255, 0.25);
+
+            overflow: hidden;
         }
 
-        .skill-title {
-            font-size: 20px;
+        .skill-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: linear-gradient(
+                115deg,
+                rgba(255, 0, 102, 0.2),
+                rgba(0, 200, 255, 0.18),
+                rgba(150, 255, 150, 0.2)
+            );
+            mix-blend-mode: screen;
+            opacity: 0.35;
+        }
+
+        .skill-card-inner {
+            position: relative;
+        }
+
+        .skill-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
             margin-bottom: 10px;
         }
 
+        .skill-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .skill-level {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #9ca3af;
+        }
+
+        .skill-bar {
+            position: relative;
+            width: 100%;
+            height: 5px;
+            border-radius: 999px;
+            background: rgba(31, 41, 55, 0.9);
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #bbf7d0, #a3e635);
+            box-shadow: 0 0 10px rgba(162, 255, 0, 0.75);
+            transform-origin: left;
+        }
+
+        .skill-high { width: 100%; }
+        .skill-mid  { width: 80%; }
+        .skill-low  { width: 60%; }
+        .skill-full { width: 100%; }
+
         .skill-desc {
-            font-size: 14px;
-            opacity: 0.8;
+            font-size: 13px;
+            color: #ECDFCC;
+            margin-bottom: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .skill-tag {
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(39, 46, 27, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            color: #ECDFCC;
+        }
+
+        /* ===== PREVIEW ДЛЯ BLENDER ===== */
+        .skill-card.has-preview {
+            cursor: pointer;
+        }
+
+        .skill-preview {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+
+            opacity: 0;
+            transform: scale(1.05);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+
+            background: rgba(0,0,0,0.6);
+            border-radius: inherit;
+            z-index: 2;
+        }
+
+        .skill-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .skill-card.has-preview:hover .skill-preview {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        footer {
+            max-width: 1080px;
+            margin: 32px auto 0;
+            padding: 0 18px 18px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* ===== АДАПТИВ ===== */
+
+        /* планшети */
+        @media (max-width: 900px) {
+            .container {
+                padding: 8px 14px;
+            }
+
+            main {
+                padding: 24px 14px 36px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
+            }
+        }
+
+        /* телефони */
+        @media (max-width: 640px) {
+            body {
+                font-size: 14px;
+            }
+
+            header {
+                position: static;
+            }
+
+            .container {
+                padding: 8px 12px;
+            }
+
+            .nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 12px;
+                font-size: 13px;
+            }
+
+            main {
+                padding: 20px 12px 28px;
+            }
+
+            .skills-header {
+                margin-bottom: 18px;
+            }
+
+            .skills-header h1 {
+                font-size: 22px;
+            }
+
+            .skills-header p {
+                font-size: 13px;
+                max-width: 100%;
+            }
+
+            .skills-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .skill-card {
+                padding: 14px 14px 12px;
+                border-radius: 18px;
+            }
+
+            .skill-name {
+                font-size: 15px;
+            }
+
+            .skill-desc {
+                font-size: 12px;
+            }
+
+            footer {
+                padding: 0 12px 16px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>My Skills</h1>
+    <!-- Відеофон IQOS -->
+    <div class="bg-video-wrap">
+        <video autoplay loop muted playsinline>
+            <source src="IQOS.mp4" type="video/mp4">
+        </video>
+    </div>
 
-    <div class="skills-grid">
+    <div class="page-overlay">
+        <!-- HEADER -->
+        <header>
+            <div class="container nav">
+                <div class="logo">3D.ARTS.DEV</div>
+                <nav>
+                    <a href="index.html">Home</a>
+                    <a href="portfolio.html">About me</a>
+                    <a href="skills.html" class="active">Skills</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="portfolio.html#contact">Contacts</a>
+                </nav>
+            </div>
+        </header>
 
-        <div class="skill-card">
-            <div class="skill-title">HTML</div>
-            <div class="skill-desc">Розмітка сторінок, структура, семантика.</div>
-        </div>
+        <!-- КОНТЕНТ -->
+        <main>
+            <section class="skills-header">
+                <span class="pill">
+                    <span class="pill-dot"></span>
+                    Core stack & 3D
+                </span>
+                <h1>Skills & Tools</h1>
+                <p>
+                    Technologies I work with every day: from 3D modelling and rendering to responsive website design and interface animation. 
+                </p>
+            </section>
 
-        <div class="skill-card">
-            <div class="skill-title">CSS</div>
-            <div class="skill-desc">Стилі, анімації, адаптив, UI компоненти.</div>
-        </div>
+            <section class="skills-grid-wrap">
+                <div class="skills-grid">
 
-        <div class="skill-card">
-            <div class="skill-title">JavaScript</div>
-            <div class="skill-desc">Логіка, інтерактивність, анімації.</div>
-        </div>
+                    <!-- HTML -->
+                    <article class="skill-card">
+                        <div class="skill-card-inner">
+                            <div class="skill-top-row">
+                                <div class="skill-name">HTML</div>
+                                <div class="skill-level">Strong</div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-fill skill-high"></div>
+                            </div>
+                            <div class="skill-desc">
+                                Semantic markup, page structure, preparation for adaptive layouts.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Semantic</span>
+                                <span class="skill-tag">Landing pages</span>
+                                <span class="skill-tag">SEO basics</span>
+                            </div>
+                        </div>
+                    </article>
 
-        <div class="skill-card">
-            <div class="skill-title">Cinema4D</div>
-            <div class="skill-desc">3D моделювання, текстури, анімація.</div>
-        </div>
+                    <!-- CSS -->
+                    <article class="skill-card">
+                        <div class="skill-card-inner">
+                            <div class="skill-top-row">
+                                <div class="skill-name">CSS</div>
+                                <div class="skill-level">Strong</div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-fill skill-high"></div>
+                            </div>
+                            <div class="skill-desc">
+                                Flex/Grid, animations, gradients, glass interfaces, mobile-responsive design.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Flex / Grid</span>
+                                <span class="skill-tag">Animations</span>
+                                <span class="skill-tag">Responsive</span>
+                            </div>
+                        </div>
+                    </article>
 
+                    <!-- Substance -->
+                    <article class="skill-card">
+                        <div class="skill-card-inner">
+                            <div class="skill-top-row">
+                                <div class="skill-name">Substance Painter</div>
+                                <div class="skill-level">Strong</div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-fill skill-high"></div>
+                            </div>
+                            <div class="skill-desc">
+                                Creating realistic textures, baking, photorealistic materials.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Texturing</span>
+                                <span class="skill-tag">PBR</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Cinema 4D -->
+                    <article class="skill-card">
+                        <div class="skill-card-inner">
+                            <div class="skill-top-row">
+                                <div class="skill-name">Cinema 4D</div>
+                                <div class="skill-level">Strong</div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-fill skill-high"></div>
+                            </div>
+                            <div class="skill-desc">
+                                3D models, object animation, scenes for advertising and products.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Product shots</span>
+                                <span class="skill-tag">Animation</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blender (з прев’ю) -->
+                    <article class="skill-card has-preview">
+                        <div class="skill-card-inner">
+                            <div class="skill-top-row">
+                                <div class="skill-name">Blender</div>
+                                <div class="skill-level">Strong</div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-fill skill-full"></div>
+                            </div>
+                            <div class="skill-desc">
+                                High/low-poly models, UV, materials, basic compositing and rendering.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Modeling</span>
+                                <span class="skill-tag">UV / Texturing</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-preview">
+                            <img src="marshall.jpg" alt="Blender preview">
+                        </div>
+                    </article>
+
+                    <!-- Photoshop -->
+                    <article class="skill-card">
+                        <div class="skill-card-inner">
+                            <div class="skill-top-row">
+                                <div class="skill-name">Photoshop</div>
+                                <div class="skill-level">Strong</div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-fill skill-mid"></div>
+                            </div>
+                            <div class="skill-desc">
+                                Render processing, colour, composition, preparation of graphics for the web.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Retouch</span>
+                                <span class="skill-tag">Color</span>
+                                <span class="skill-tag">Web assets</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <footer>
+                Available for freelance & collaboration — write to me any time.
+            </footer>
+        </main>
     </div>
 
 </body>
