@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>3D.Arts.Dev</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -344,104 +345,6 @@ a:hover {
         @media (max-width: 480px) {
             .skills-grid { grid-template-columns: 1fr; }
         }
-        /* ===== АДАПТИВ ДЛЯ ТЕЛЕФОНІВ ===== */
-
-/* планшети / невеликі екрани */
-@media (max-width: 768px) {
-    .container {
-        max-width: 100%;
-        padding: 16px 14px 40px;
-    }
-
-    header {
-        position: static;
-    }
-
-    .nav {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    nav a {
-        margin-left: 0;
-        margin-right: 12px;
-        font-size: 13px;
-    }
-
-    .hero {
-        grid-template-columns: 1fr;       /* картка під текстом */
-        gap: 20px;
-        padding-top: 24px;
-    }
-
-    .hero-title {
-        font-size: 26px;
-        line-height: 1.2;
-    }
-
-    .hero-subtitle {
-        font-size: 14px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    section {
-        margin-top: 40px;
-    }
-}
-
-/* дуже маленькі екрани (телефони) */
-@media (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
-
-    .hero-title {
-        font-size: 22px;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .about-box,
-    .skill-card,
-    .project-card,
-    .contact-box {
-        padding: 12px 14px;
-        border-radius: 16px;
-    }
-
-    header {
-        padding-top: 6px;
-        padding-bottom: 6px;
-    }
-}
-
     </style>
 </head>
 
@@ -588,7 +491,12 @@ a:hover {
 
                 <div class="project-card">
                     <div class="project-title">.Behance</div>
-                    <div>https://www.behance.net/orionoff</div>
+                    <a href="https://www.behance.net/orionoff" 
+   target="_blank" 
+   style="color:#ECDFCC; text-decoration:none;">
+    https://www.behance.net/orionoff
+</a>
+
                     <div class="project-tags">
                         <span class="project-tag">VS Code</span>
                         <span class="project-tag">Practice</span>
